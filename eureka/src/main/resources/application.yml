@@ -1,0 +1,19 @@
+#启动的端口号
+server:
+  port: 8188
+eureka:
+  client:
+    #获取服务是服务消费者的基础(开启之后注册中心将每隔30秒时间更新服务清单,是服务注册进eureka以后此服务是否更新服务清单)
+    fetch-registry: false
+    #是否将自己注册进注册中心
+    register-with-eureka: false
+    #服务地址
+    service-url:
+        defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+  instance:
+    hostname: localhost
+  server:
+#    #关闭从缓存中获取服务
+#    use-read-only-response-cache: false
+    #清理下线的服务清单间隔
+    eviction-interval-timer-in-ms: 5000

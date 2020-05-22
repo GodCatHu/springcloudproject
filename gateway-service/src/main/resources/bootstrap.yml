@@ -1,0 +1,32 @@
+spring:
+  cloud:
+    config:
+#      profile: dev #指定配置文件后缀（注意dev是zuul模式的路由转发,而不加dev的则是springcloud最新的gateway的转发模式）
+      #从配置微服务读取的地址
+      discovery:
+        enabled: true
+        service-id: config-server #config微服务在eureka的实例id
+      #需要获取的配置文件名称
+      name: gateway-service
+      #需要获取的配置的分支
+      label: master
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8188/eureka/
+    register-with-eureka: false
+  instance:
+    instance-id: gateway-service
+    prefer-ip-address: true
+    #以下两者的配置都是设置此微服务在指定规则不发送心跳以后，从eureka移除实例
+
+    #表示eureka server至上一次收到client的心跳之后，等待下一次心跳的超时时间，在这个时间内若没收到下一次心跳，则将移除该instance
+    lease-expiration-duration-in-seconds: 10
+    #表示eureka client发送心跳给server端的频率。如果在leaseExpirationDurationInSeconds后，server端没有收到client的心跳，
+    #则将摘除该instance。除此之外，如果该instance实现了HealthCheckCallback，并决定让自己unavailable的话，则该instance也不会接收到流量。
+    lease-renewal-interval-in-seconds: 4
+    #这里是一个很典型的错误，因为zuul自动开启了ribbon负载均衡从eruka里面去获取服务进行调用，而如果此处将ribbon关闭，又没有去配置listOfserver
+    #也就是手动配置负载均衡地址，则导致zuul无法转发其请求
+#ribbon:
+#  eureka:
+#    enabled: false

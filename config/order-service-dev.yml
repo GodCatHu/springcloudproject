@@ -1,0 +1,15 @@
+#config-client微服务的远程配置文件
+server:
+  port: 8489
+spring:
+  #此处需要严格注意，spring.application.name是微服务名称.而eureka中配置的instance-appname则是在此处没有配置的时候才生效，而instance-id则仅仅是在eureka上后面所显示的实例名称
+  application:
+    name: order-service
+#此配置是开启本微服务可动态刷新配置文件(启动微服务以后，如果远程配置文件被修改,则调用refresh接口可重新更新配置文件)
+#其刷新地址是http://localhost:8689/actuator/refresh ,新版本新增了actuator,并且必须采用post请求发起
+#另外可以采用spring cloud bus所提供的消息服务总线来自动更新,具体用到需要百度
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh

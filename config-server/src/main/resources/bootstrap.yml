@@ -1,0 +1,31 @@
+server:
+  port: 8388
+spring:
+  application:
+    #配置其微服务名称
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          #配置其远程config 配置文件git地址
+          uri: https://git.lug.ustc.edu.cn/cyhuwei/springcloudproject.git
+          search-paths: config
+          #因为https是ssl安全访问，如果不开此配置则会报错
+          skipSslValidation: true
+          username: cyhuwei@163.com
+          password: beiqinghuwei520
+          #开启服务时自动克隆配置(加强刷新)
+          clone-on-start: true
+      label: master
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8188/eureka/
+    eureka-server-read-timeout-seconds: 5
+  #配置其微服务实例名称
+  instance:
+    instance-id: config-server
+    prefer-ip-address: true
+    lease-expiration-duration-in-seconds: 10
+    lease-renewal-interval-in-seconds: 4

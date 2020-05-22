@@ -1,0 +1,8 @@
+#服务名称(在eureka上显示的名称)
+spring:
+  #此处需要严格注意，spring.application.name是微服务名称.而eureka中配置的instance-appname则是在此处没有配置的时候才生效，而instance-id则仅仅是在eureka上后面所显示的实例名称
+  application:
+    name: client-server
+#本微服务启动端口号
+server:
+  port: 8288

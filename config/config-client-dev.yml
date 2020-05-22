@@ -1,0 +1,13 @@
+#config-client微服务的远程配置文件
+server:
+  port: 8689
+spring:
+  #此处需要严格注意，spring.application.name是微服务名称.而eureka中配置的instance-appname则是在此处没有配置的时候才生效，而instance-id则仅仅是在eureka上后面所显示的实例名称
+  application:
+    name: config-client
+#此处配置仅仅是非系统属性设置(不是mybitas或者其他组件的配置,仅仅是单纯的一种配置，例如配置访问地址什么的。)
+sample:
+  string:
+    property: Client App
+  int:
+    property: 2

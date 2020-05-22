@@ -1,0 +1,7 @@
+#config-client微服务的远程配置文件
+server:
+  port: 8090
+spring:
+  #此处需要严格注意，spring.application.name是微服务名称.而eureka中配置的instance-appname则是在此处没有配置的时候才生效，而instance-id则仅仅是在eureka上后面所显示的实例名称
+  application:
+    name: hystrix-dashboard

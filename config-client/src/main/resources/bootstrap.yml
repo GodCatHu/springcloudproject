@@ -1,0 +1,26 @@
+spring:
+  cloud:
+    config:
+      profile: dev #指定配置文件后缀
+      #从配置微服务读取的地址
+      discovery:
+        enabled: true
+        service-id: config-server #config微服务在eureka的实例id
+      #需要获取的配置文件名称
+      name: config-client
+      #需要获取的配置的分支
+      label: master
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8188/eureka/
+  instance:
+    instance-id: config-client
+#此配置是开启本微服务可动态刷新配置文件(启动微服务以后，如果远程配置文件被修改,则调用refresh接口可重新更新配置文件)
+#其刷新地址是http://localhost:8689/actuator/refresh ,新版本新增了actuator,并且必须采用post请求发起
+#另外可以采用spring cloud bus所提供的消息服务总线来自动更新,具体用到需要百度
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh

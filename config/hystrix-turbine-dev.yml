@@ -1,0 +1,12 @@
+#config-client微服务的远程配置文件
+server:
+  port: 8091
+spring:
+  #此处需要严格注意，spring.application.name是微服务名称.而eureka中配置的instance-appname则是在此处没有配置的时候才生效，而instance-id则仅仅是在eureka上后面所显示的实例名称
+  application:
+    name: hystrix-turbine
+turbine:
+  #app-config是配置需要监控的微服务名称,多个以逗号隔开
+  app-config: order-api-fegin
+  #这个是配置集群名称，这里是默认
+  cluster-name-expression: "'default'"

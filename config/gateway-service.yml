@@ -1,0 +1,28 @@
+#gateway-service微服务的远程配置文件
+server:
+  port: 8789
+spring:
+  #此处需要严格注意，spring.application.name是微服务名称.而eureka中配置的instance-appname则是在此处没有配置的时候才生效，而instance-id则仅仅是在eureka上后面所显示的实例名称
+  application:
+    name: gateway-service
+  #以下是springclooud gateway的路由配置模式
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+#      以下配置需要注意，其中中划线必须与上级平级，随后空格key value，
+      routes:
+      - id: orderapi #定义转发的ID，这个值没有真正用于转发，类似于定义了一个bean的ID
+      # 重点！/info必须使用http进行转发，lb代表从注册中心获取服务，也就是说如果要采用http方式进行转发 则不需要加lb。直接写就行了，与服务联合使用则需要lb开头以说明是通过eruka找到对应的服务地址
+        uri: lb://order-api-feign
+#        以下是配置转发路径，下面意思是路径中带有/order-api的都直接转发到对应的order-api-feign微服务
+        predicates:
+        - Path=/order-api/**
+        filters:
+       #接受一个非负整数的值,例如我访问的地址是http://localhost:8789/order-api/test 那么此时不加这个值的话，
+       #由gateway转发过去就是http://localhost:8589/order-api/test  ，而加上这个值以后，则会网上去掉转发层数变为http://localhost:8589/test(这里踩了一个坑，千万注意)
+        - StripPrefix=1
+        #以下是定义了转发头
+        - AddResponseHeader=X-Response-Default-Foo, Default-Bar

@@ -1,0 +1,15 @@
+#gateway-service微服务的远程配置文件
+server:
+  port: 8789
+spring:
+  #此处需要严格注意，spring.application.name是微服务名称.而eureka中配置的instance-appname则是在此处没有配置的时候才生效，而instance-id则仅仅是在eureka上后面所显示的实例名称
+  application:
+    name: gateway-service
+zuul:
+  routes:
+    #此处的orderapi只是随便起的名字，并没有任何作用，只是对于微服务进行了分组的一个作用
+    orderapi:
+      path: /order-api/**
+      serviceId: order-api-feign
+  #此配置是指在请求网关上统一加上/api访问路径
+  prefix: /api

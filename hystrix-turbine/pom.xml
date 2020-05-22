@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>huweilearn</artifactId>
+        <groupId>com.huwei</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.huwei</groupId>
+    <artifactId>hystrix-turbine</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <dependencies>
+        <!--引入web工程依赖-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!-- 此包是监控组件，可以用于配合config组件监控配置文件变更从而去刷新配置，以及配合hystrix-Dashboard进行web页面的图形化监控负载，以及其他等等功能-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <!--        引入eureka客户端-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+        <!--        引入config配置客户端,从远程拉取数据-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
+        </dependency>
+<!--        引入集群监控组件，此组件将所有微服务进行汇总，那么hystrix-dashboard就能看到整个集群的信息，而不是单个微服务的-->
+<!--        这里需要严格注意，所监控的微服务必须引入hystrix-dashboard和hystrix，且必须注解EnableHystrix，EnableHystrixDashboard开启监控，并且依赖监控模块，开启hystrix.stream访问-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-turbine</artifactId>
+        </dependency>
+    </dependencies>
+</project>

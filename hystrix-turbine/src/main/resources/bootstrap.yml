@@ -1,0 +1,19 @@
+spring:
+  cloud:
+    config:
+      profile: dev #指定配置文件后缀
+      #从配置微服务读取的地址
+      discovery:
+        enabled: true
+        service-id: config-server #config微服务在eureka的实例id
+      #需要获取的配置文件名称
+      name: hystrix-turbine
+      #需要获取的配置的分支
+      label: master
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8188/eureka/
+  instance:
+    instance-id: hystrix-turbine
+    prefer-ip-address: true

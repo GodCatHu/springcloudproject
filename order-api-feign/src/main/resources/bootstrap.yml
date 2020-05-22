@@ -1,0 +1,34 @@
+spring:
+  cloud:
+    config:
+      profile: dev #指定配置文件后缀
+      #从配置微服务读取的地址
+      discovery:
+        enabled: true
+        service-id: config-server #config微服务在eureka的实例id
+      #需要获取的配置文件名称
+      name: order-api-feign
+      #需要获取的配置的分支
+      label: master
+  application:
+    name: order-api-feign
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8188/eureka/
+  instance:
+    instance-id: order-api-feign
+    prefer-ip-address: true
+    #以下两者的配置都是设置此微服务在指定规则不发送心跳以后，从eureka移除实例
+
+    #表示eureka server至上一次收到client的心跳之后，等待下一次心跳的超时时间，在这个时间内若没收到下一次心跳，则将移除该instance
+    lease-expiration-duration-in-seconds: 10
+    #表示eureka client发送心跳给server端的频率。如果在leaseExpirationDurationInSeconds后，server端没有收到client的心跳，
+    #则将摘除该instance。除此之外，如果该instance实现了HealthCheckCallback，并决定让自己unavailable的话，则该instance也不会接收到流量。
+    lease-renewal-interval-in-seconds: 4
+ribbon:
+  eureka:
+    enabled: false
+order-service:
+  ribbon:
+    listOfServers: http://localhost:8489/test
